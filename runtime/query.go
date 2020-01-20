@@ -24,7 +24,9 @@ func PopulateQueryParameters(msg proto.Message, values url.Values, filter *utili
 		match := valuesKeyRegexp.FindStringSubmatch(key)
 		if len(match) == 3 {
 			key = match[1]
-			values = append([]string{match[2]}, values...)
+			if match[2] != "" {
+				values = append([]string{match[2]}, values...)
+			}
 		}
 		fieldPath := strings.Split(key, ".")
 		if filter.HasCommonPrefix(fieldPath) {
